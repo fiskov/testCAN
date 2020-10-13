@@ -1,22 +1,9 @@
 #include "lcd.h"
 //------------------------------------------------
 I2C_HandleTypeDef *hi2c_p;
-uint8_t portLCD; //  младшие 4 бита при передаче 
+uint8_t portLCD; //D4,D5,D6,D7, LIGHT, E, R/W, R/S
 uint8_t addr=0x0;
 
-typedef union
-{
-  uint8_t byte;
-  struct 
-  {
-    uint8_t rs : 1;
-    uint8_t rw : 1;
-    uint8_t e : 1;
-    uint8_t light : 1;
-    uint8_t ch : 4;
-  } bits;
-} byte_union_t;
-byte_union_t portLCDu;
 //------------------------------------------------
 #define   e_set() LCD_WriteByteI2CLCD(portLCD |= 0x04)  
 #define e_reset() LCD_WriteByteI2CLCD(portLCD &= ~0x04) //установка линии Е в 0
