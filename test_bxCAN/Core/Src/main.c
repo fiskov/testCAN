@@ -20,11 +20,12 @@
 /* Includes ------------------------------------------------------------------*/
 #include "main.h"
 #include "can.h"
+#include "usb_device.h"
 #include "gpio.h"
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
-
+#include "usbd_cdc_if.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -44,7 +45,7 @@
 /* Private variables ---------------------------------------------------------*/
 
 /* USER CODE BEGIN PV */
-HAL_StatusTypeDef CANsendTest(CAN_HandleTypeDef *p_hcan, uint16_t addr);
+
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -61,8 +62,7 @@ CAN_RxHeaderTypeDef RxHeader;
 uint8_t TxData[8];
 uint8_t RxData[8];
 uint32_t TxMailbox;
-int rcvOk, rcvOk1;
-const uint8_t CANaddr = 1, CANgroup = 2;
+int ledSendCounter, ledRcvCounter, ledUSBCounter;
 /* USER CODE END 0 */
 
 /**
@@ -93,19 +93,13 @@ int main(void)
 
   /* Initialize all configured peripherals */
   MX_GPIO_Init();
-  MX_CAN1_Init();
+  MX_USB_DEVICE_Init();
   /* USER CODE BEGIN 2 */
-
-	CAN_InitFilter(&hcan1, CANaddr, CANgroup); 	
-	
-	//проверка посылка 0х400 на правильный адрес 
-	//проверка посылка 0х400 на не правильный адрес 
-	//проверка посылка 0х700 на правильную группу
-	//проверка посылка 0х700 на не правильную группу
-	//проверка посылка 0х700 широковещательная	
-  //0x100, 0х300, 0х500, 0х600, 0х700 - команды для группы устройств, 0x400 - команда для одного устройства по адресу
-	uint16_t addrArray[] = {0x480 + CANaddr, 0x481 + CANaddr, 0x700 + CANgroup, 0x701 + CANgroup, 0x77F, 	
-					0x100 + CANgroup, 0x200 + CANgroup, 0x300 + CANgroup, 0x400 + CANaddr, 0x500 + CANgroup, 0x600 + CANgroup, 0x700 + CANgroup};	
+  //скорость передачи по CAN-шине. Либо 250 кбит/с, либо 115 кбит/с
+  #define CAN_SPEED 250
+  if (CAN_SPEED == 115) MX_CAN1_Init_115(); else	MX_CAN1_Init();
+    
+	CAN_InitFilter(&hcan1, 0, 0); 	
   
   /* USER CODE END 2 */
 
@@ -116,19 +110,11 @@ int main(void)
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
-		rcvOk = 0;
-		
-		for (int i = 0; i < 7; i++) {
-			rcvOk1 = 0;
-			CANsendTest(&hcan1, addrArray[i]); 
-			debugPinPulsePIN3(70);	
-			if (rcvOk1) debugPinPulsePIN4(50);	
-			HAL_Delay(350);
-		} 
-		
-		for (int i = 0; i < rcvOk; i++) {debugPinPulsePIN5(250);HAL_Delay(250); }
-		
-		HAL_Delay(1500);
+    debugPinCounter(3, &ledSendCounter);
+    debugPinCounter(4, &ledRcvCounter);
+    debugPinCounter(5, &ledUSBCounter);
+    
+		HAL_Delay(1);
   }
   /* USER CODE END 3 */
 }
@@ -149,10 +135,14 @@ void SystemClock_Config(void)
   /** Initializes the RCC Oscillators according to the specified parameters
   * in the RCC_OscInitTypeDef structure.
   */
-  RCC_OscInitStruct.OscillatorType = RCC_OSCILLATORTYPE_HSI;
-  RCC_OscInitStruct.HSIState = RCC_HSI_ON;
-  RCC_OscInitStruct.HSICalibrationValue = RCC_HSICALIBRATION_DEFAULT;
-  RCC_OscInitStruct.PLL.PLLState = RCC_PLL_NONE;
+  RCC_OscInitStruct.OscillatorType = RCC_OSCILLATORTYPE_HSE;
+  RCC_OscInitStruct.HSEState = RCC_HSE_ON;
+  RCC_OscInitStruct.PLL.PLLState = RCC_PLL_ON;
+  RCC_OscInitStruct.PLL.PLLSource = RCC_PLLSOURCE_HSE;
+  RCC_OscInitStruct.PLL.PLLM = 4;
+  RCC_OscInitStruct.PLL.PLLN = 72;
+  RCC_OscInitStruct.PLL.PLLP = RCC_PLLP_DIV2;
+  RCC_OscInitStruct.PLL.PLLQ = 3;
   if (HAL_RCC_OscConfig(&RCC_OscInitStruct) != HAL_OK)
   {
     Error_Handler();
@@ -161,12 +151,12 @@ void SystemClock_Config(void)
   */
   RCC_ClkInitStruct.ClockType = RCC_CLOCKTYPE_HCLK|RCC_CLOCKTYPE_SYSCLK
                               |RCC_CLOCKTYPE_PCLK1|RCC_CLOCKTYPE_PCLK2;
-  RCC_ClkInitStruct.SYSCLKSource = RCC_SYSCLKSOURCE_HSI;
+  RCC_ClkInitStruct.SYSCLKSource = RCC_SYSCLKSOURCE_PLLCLK;
   RCC_ClkInitStruct.AHBCLKDivider = RCC_SYSCLK_DIV1;
-  RCC_ClkInitStruct.APB1CLKDivider = RCC_HCLK_DIV1;
+  RCC_ClkInitStruct.APB1CLKDivider = RCC_HCLK_DIV2;
   RCC_ClkInitStruct.APB2CLKDivider = RCC_HCLK_DIV1;
 
-  if (HAL_RCC_ClockConfig(&RCC_ClkInitStruct, FLASH_LATENCY_0) != HAL_OK)
+  if (HAL_RCC_ClockConfig(&RCC_ClkInitStruct, FLASH_LATENCY_2) != HAL_OK)
   {
     Error_Handler();
   }
@@ -175,41 +165,55 @@ void SystemClock_Config(void)
 /* USER CODE BEGIN 4 */
 
 
-//на прерывание от любого CAN-приёмника обрабатываем принятую информацию
+static uint8_t tx_USBbfr[11] = {0};
+//на прерывание от первого CAN-приёмника отправляем по USB
 void HAL_CAN_RxFifo0MsgPendingCallback(CAN_HandleTypeDef *p_hcan) {
 	HAL_CAN_GetRxMessage(p_hcan, CAN_RX_FIFO0, &RxHeader, RxData);
-	
-	int res = 1;
-	for (int i = 0; i<8; i++)	
-		if (RxData[i] != i) res = 0;
-	
-	//отделяем проверку по группе от  адреса
-	if (res) {
-		int msgId = RxHeader.StdId;
-		switch (msgId & 0x0F00) {
-			case 0x200: rcvOk++; rcvOk1=1; break; //от прибора управления
-		
-			case 0x400: rcvOk++; rcvOk1=1; break; //от программатора
-			case 0x500: rcvOk++; rcvOk1=1; break;
-			case 0x600: rcvOk++; rcvOk1=1; break;
-			case 0x700: rcvOk++; rcvOk1=1; break;	
-		}	
-	}
+  
+  
+  tx_USBbfr[0] = (RxHeader.StdId >> 8) & 0xFF;
+  tx_USBbfr[1] = RxHeader.StdId & 0xFF;
+  tx_USBbfr[2] = 8;
+  
+  for (int i = 0; i<8; i++)	tx_USBbfr[i+3] = RxData[i];
+  
+  ledRcvCounter=50;
+  //отправка по USB
+	CDC_Transmit_FS(tx_USBbfr, 11);
 }
 
 
-HAL_StatusTypeDef CANsendTest(CAN_HandleTypeDef *p_hcan, uint16_t addr) {
+HAL_StatusTypeDef CANsendTest(CAN_HandleTypeDef *p_hcan, uint16_t addr, uint8_t * bfr, uint8_t size) {
 	TxHeader.StdId = addr;
 	TxHeader.RTR = CAN_RTR_DATA;
 	TxHeader.IDE = CAN_ID_STD;
-	TxHeader.DLC = 8;
+	TxHeader.DLC = size;
 	TxHeader.TransmitGlobalTime = DISABLE;
-	for (int i=0; i<8; i++) TxData[i] = i;
-	
-	return HAL_CAN_AddTxMessage(p_hcan, &TxHeader, TxData, &TxMailbox);
+	//for (int i=0; i<size; i++) TxData[i] = bfr[i];
+  
+	ledSendCounter=50;
+	return HAL_CAN_AddTxMessage(p_hcan, &TxHeader, bfr, &TxMailbox);
 }
 
-void debugPinPulse(int pinLedNo, int delayTime){
+
+//на прием от USB посылаем в CAN
+static uint8_t bfrSend[8] = {0};
+void CDC_RecieveCallBack(uint8_t *bfrUSB, uint32_t len)
+{
+  uint16_t addr = bfrUSB[0] * 256 + bfrUSB[1];
+
+  int size = bfrUSB[2];
+  if (size > 8) size = 8;
+  memset(bfrSend, 0, 8);
+  for (int i=0; i<size; i++) bfrSend[i] = bfrUSB[i+3];
+  
+  ledUSBCounter=50;
+  
+  CANsendTest(&hcan1, addr, bfrSend, size);
+}
+
+void debugPinPulse(int pinLedNo, int delayTime)
+{
 	GPIO_TypeDef *port = GPIOD;
 	uint16_t pin;
 	switch (pinLedNo) {
@@ -222,6 +226,26 @@ void debugPinPulse(int pinLedNo, int delayTime){
 	HAL_GPIO_WritePin(port, pin, GPIO_PIN_SET);
 	HAL_Delay(delayTime);
 	HAL_GPIO_WritePin(port, pin, GPIO_PIN_RESET);
+}
+
+void debugPinCounter(int pinLedNo, int *counter)
+{
+	GPIO_TypeDef *port = GPIOD;
+	uint16_t pin;
+  int cnt = *counter;
+	switch (pinLedNo) {
+		case 4: pin = DBG_LED4_Pin; break;
+		case 5: pin = DBG_LED5_Pin; break;
+		case 6: pin = DBG_LED6_Pin; break;
+		default: pin = DBG_LED3_Pin;			
+	}
+	
+  if (cnt > 0) {
+    HAL_GPIO_WritePin(port, pin, GPIO_PIN_SET);
+    cnt--;
+    if (cnt==0) HAL_GPIO_WritePin(port, pin, GPIO_PIN_RESET);
+  }
+	*counter = cnt;	
 }
 /* USER CODE END 4 */
 

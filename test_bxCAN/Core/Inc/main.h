@@ -67,6 +67,7 @@ void Error_Handler(void);
 #define DBG_LED6_Pin GPIO_PIN_15
 #define DBG_LED6_GPIO_Port GPIOD
 /* USER CODE BEGIN Private defines */
+void debugPinCounter(int pinLedNo, int *counter);
 void debugPinPulse(int pinLedNo, int delayTime);
 #define debugPinPulsePIN3(x) do{ debugPinPulse(3,x); } while(0)
 #define debugPinPulsePIN4(x) do{ debugPinPulse(4,x); } while(0)

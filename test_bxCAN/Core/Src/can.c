@@ -9,10 +9,10 @@
   * <h2><center>&copy; Copyright (c) 2020 STMicroelectronics.
   * All rights reserved.</center></h2>
   *
-  * This software component is licensed by ST under BSD 3-Clause license,
-  * the "License"; You may not use this file except in compliance with the
-  * License. You may obtain a copy of the License at:
-  *                        opensource.org/licenses/BSD-3-Clause
+  * This software component is licensed by ST under Ultimate Liberty license
+  * SLA0044, the "License"; You may not use this file except in compliance with
+  * the License. You may obtain a copy of the License at:
+  *                             www.st.com/SLA0044
   *
   ******************************************************************************
   */
@@ -31,11 +31,11 @@ void MX_CAN1_Init(void)
 {
 
   hcan1.Instance = CAN1;
-  hcan1.Init.Prescaler = 21;
-  hcan1.Init.Mode = CAN_MODE_LOOPBACK;
+  hcan1.Init.Prescaler = 9;
+  hcan1.Init.Mode = CAN_MODE_NORMAL;
   hcan1.Init.SyncJumpWidth = CAN_SJW_1TQ;
-  hcan1.Init.TimeSeg1 = CAN_BS1_6TQ;
-  hcan1.Init.TimeSeg2 = CAN_BS2_1TQ;
+  hcan1.Init.TimeSeg1 = CAN_BS1_13TQ;
+  hcan1.Init.TimeSeg2 = CAN_BS2_2TQ;
   hcan1.Init.TimeTriggeredMode = DISABLE;
   hcan1.Init.AutoBusOff = ENABLE;
   hcan1.Init.AutoWakeUp = DISABLE;
@@ -111,27 +111,28 @@ void HAL_CAN_MspDeInit(CAN_HandleTypeDef* canHandle)
 }
 
 /* USER CODE BEGIN 1 */
-void CAN_InitFilter0(CAN_HandleTypeDef *p_hcan, int filterAddr, int filterGroup){	
-	//фильтр на сообщения
-  CAN_FilterTypeDef canFilterConfig;
-	
-  canFilterConfig.FilterBank = 0;
-	canFilterConfig.FilterMode = CAN_FILTERMODE_IDMASK;
-	canFilterConfig.FilterScale = CAN_FILTERSCALE_16BIT;
-	if (filterGroup == 0) filterGroup = 0x7F; //если "0" - группа не определена, срабатывает только на broadcast
-	canFilterConfig.FilterIdHigh = (0x0700 + filterGroup) << 5;
-	canFilterConfig.FilterIdLow = (0x077F) << 5; // broadcast
-	canFilterConfig.FilterMaskIdHigh = 0x077F << 5; 
-	canFilterConfig.FilterMaskIdLow = 0x077F << 5;
-	
-  canFilterConfig.FilterFIFOAssignment = CAN_RX_FIFO0;
-  canFilterConfig.FilterActivation = ENABLE;
-	if ( HAL_CAN_ConfigFilter(p_hcan, &canFilterConfig) != HAL_OK) Error_Handler();	
-	
-	//старт модуля передачи
-  if ( HAL_CAN_Start(p_hcan) != HAL_OK) Error_Handler();
-  if ( HAL_CAN_ActivateNotification(p_hcan, CAN_IT_RX_FIFO0_MSG_PENDING) != HAL_OK) Error_Handler();
+void MX_CAN1_Init_115(void)
+{ // ABP1 = 36 MHz
+
+  hcan1.Instance = CAN1;
+  hcan1.Init.Prescaler = 21;
+  hcan1.Init.Mode = CAN_MODE_NORMAL;
+  hcan1.Init.SyncJumpWidth = CAN_SJW_1TQ;
+  hcan1.Init.TimeSeg1 = CAN_BS1_12TQ;
+  hcan1.Init.TimeSeg2 = CAN_BS2_2TQ;
+  hcan1.Init.TimeTriggeredMode = DISABLE;
+  hcan1.Init.AutoBusOff = ENABLE;
+  hcan1.Init.AutoWakeUp = DISABLE;
+  hcan1.Init.AutoRetransmission = DISABLE;
+  hcan1.Init.ReceiveFifoLocked = DISABLE;
+  hcan1.Init.TransmitFifoPriority = DISABLE;
+  if (HAL_CAN_Init(&hcan1) != HAL_OK)
+  {
+    Error_Handler();
+  }
+
 }
+
 void CAN_InitFilter(CAN_HandleTypeDef *p_hcan, int filterAddr, int filterGroup){
 	
 	//фильтр на сообщения
@@ -143,42 +144,16 @@ void CAN_InitFilter(CAN_HandleTypeDef *p_hcan, int filterAddr, int filterGroup){
 	//на stm32f407vg CAN2 в адресном пространство CAN1, поэтому пишем в фильтр #14
   canFilterConfig.FilterBank = 0 + (p_hcan->Instance==CAN1 ? 0 : 14);
 	
-	//так как используется 16 битный фильтр, то можно определить 2 фильтра по маске (в High и в Low соответственно)
-	//сдвиг на 5 - так устроен bxCAN в STM32	
-	canFilterConfig.FilterMode = CAN_FILTERMODE_IDLIST;
-	canFilterConfig.FilterScale = CAN_FILTERSCALE_16BIT;
-	
-	//так как используется 16 битный фильтр, то можно определить 4 идентификатора
-	//сдвиг на 5 - так устроен bxCAN в STM32
-	//фильтр по группе
-  canFilterConfig.FilterIdHigh = (0x0200 + filterGroup) << 5; 
-  canFilterConfig.FilterIdLow = (0x0500 + filterGroup) << 5;
-  canFilterConfig.FilterMaskIdHigh = (0x0600 + filterGroup) << 5;
-  canFilterConfig.FilterMaskIdLow = (0x0700 + filterGroup) << 5;
+	//ничего не фильтруем
+	canFilterConfig.FilterMode = CAN_FILTERMODE_IDMASK;
+	canFilterConfig.FilterScale = CAN_FILTERSCALE_32BIT;
+  canFilterConfig.FilterIdHigh = 0; 
+  canFilterConfig.FilterIdLow = 0;
+  canFilterConfig.FilterMaskIdHigh = 0;
+  canFilterConfig.FilterMaskIdLow = 0;
+  canFilterConfig.FilterActivation = ENABLE;
   
-  //если группа=0, значит она "не определан", фильтр не включаем
-	canFilterConfig.FilterActivation = (filterGroup > 0 ? ENABLE : DISABLE);
   HAL_CAN_ConfigFilter(p_hcan, &canFilterConfig);
-	
-	//фильтр по группе - broadcast
-	canFilterConfig.FilterBank = 1 + (p_hcan->Instance==CAN1 ? 0 : 14); 
-  canFilterConfig.FilterIdHigh = (0x0200 + 0x7F) << 5; 
-  canFilterConfig.FilterIdLow = (0x0500 + 0x7F) << 5;
-  canFilterConfig.FilterMaskIdHigh = (0x0600 + 0x7F) << 5;
-  canFilterConfig.FilterMaskIdLow = (0x0700 + 0x7F) << 5;
-  
-	canFilterConfig.FilterActivation = ENABLE;
-  HAL_CAN_ConfigFilter(p_hcan, &canFilterConfig);	
-
-	//еще один фильтр - по адресу, команда 0x480. Для CAN2 фильтр #15	
-  canFilterConfig.FilterBank = 2 + (p_hcan->Instance==CAN1 ? 0 : 14); 	
-	//так как используется 16 битный фильтр, то надо определить 4 идентификатора
-  canFilterConfig.FilterIdHigh = (0x0480 + filterAddr) << 5;	
-  canFilterConfig.FilterIdLow = (0x0480 + filterAddr) << 5;
-  canFilterConfig.FilterMaskIdHigh = (0x0480 + filterAddr) << 5;
-  canFilterConfig.FilterMaskIdLow = (0x0480 + filterAddr) << 5;	
-	
-  HAL_CAN_ConfigFilter(p_hcan, &canFilterConfig);	
   
 	//старт модуля передачи
   HAL_CAN_Start(p_hcan);
