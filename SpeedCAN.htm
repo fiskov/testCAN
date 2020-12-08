@@ -1,0 +1,73 @@
+<style>
+th, td {border: 1px solid black;}
+</style>
+
+
+<form id = 'CANSettings'>
+    Calculate bxCAN registers on stm32<br>
+    CAN settings:<br>
+   
+    freqPCLK1, Hz : &nbsp;<input type='text' name='freq' value="42000000"/> <br>   
+    speedCAN, bit/s:&nbsp;<input type='text' name='speed' value="250000"/> <br>   
+    tolerance, bit/s:&nbsp;<input type='text' name='range' value="500"/> <br>   
+    
+    <input type="button" value="Calculate" id='calc' >
+</form>
+<div id="dispResult"></div>
+
+
+<script>   
+  document.getElementById('calc').onclick = function () {
+    var freqTxt  = document.querySelector("#CANSettings [name='freq']");
+    var speed0Txt = document.querySelector("#CANSettings [name='speed']");
+    var rangeTxt = document.querySelector("#CANSettings [name='range']");
+    freq  = freqTxt.value;
+    speed0 = speed0Txt.value;
+    range = rangeTxt.value;
+
+    document.getElementById('dispResult').innerHTML = search(freq, speed0, range);
+    }    
+    
+  var rgbToHex = function (rgb) { 
+    var hex = Number(rgb).toString(16);
+      if (hex.length < 2) 
+         hex = "0" + hex;
+      return hex;
+  }
+  
+  function search(freq, speed0, range)
+  {            
+    var html="";
+
+    //q1 1..16
+    //q2 1..8
+    //pre 1..1024
+    var v = 0;    
+    var speed0p = 1.0*speed0 + 1.0*range;
+    var speed0m = 1.0*speed0 - 1.0*range;    
+    
+    for (var pre = 1; pre < 1024; pre++)
+        for (var q1 = 1; q1 < 16; q1++)
+            for (var q2 = 1; q2 < 8; q2++)
+            {
+                var speed = 1.0*freq / pre / (q1 + q2 + 1);
+                var sp = 1.0 - 1.0*q2 / (q1 + q2 + 1);
+
+                if (speed >= speed0m && speed <= speed0p)
+                    if (sp > 0.7 && sp < 0.9)
+                    {
+                        if (v == 0)
+                            html+="<table width='500'><tr><th>pre<th>q1<th>q2<th>speed<th>point</tr>";
+                        v++;                
+                        var clv = Math.round(Math.min(Math.abs(sp-0.875) / 0.025, 1) * 255);  
+                        var cl = rgbToHex(clv);
+                        html+="<tr bgcolor='#"+cl+"FF"+cl+"' ><td>"+pre+"<td>"+q1+"<td>"+q2+
+                          "<td>"+speed.toFixed(2)+"<td>"+sp.toFixed(3)+"</tr>";
+                    }   
+            }
+    if (v !=0 ) html+="</table>"; else
+        html="Not found!";  
+        
+    return html;
+  }     
+</script>
