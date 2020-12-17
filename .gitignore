@@ -401,3 +401,6 @@ ASALocalRun/
 
 # BeatPulse healthcheck temp database
 healthchecksdb
+/test_bxCAN/MDK-ARM/testCAN/*.iex
+/test_bxCAN/MDK-ARM/testCAN/*.sct
+/test_bxCAN/MDK-ARM/testCAN/*.htm
