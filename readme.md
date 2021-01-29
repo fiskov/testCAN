@@ -24,5 +24,5 @@ STM32CubeMX 6.01, Keil 5.27
 Небольшой скрипт на javascript для поиска регистров модуля bxCAN процессоров stm32 
 
 ## IIP_176_win
-![Приложение IIP_176_win](https://github.com/fiskov/testProg/blob/master/Image/mainForm.png)
 Утилита для удобства отладки IIP_176x.x - обмен происходит через RS485 напрямую 
+![Приложение IIP_176_win](https://github.com/fiskov/testProg/blob/master/Image/iip_176xx_win.png)
