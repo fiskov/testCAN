@@ -6,7 +6,7 @@
         xmlns:sys="clr-namespace:System;assembly=mscorlib"
         xmlns:io="clr-namespace:System.IO.Ports;assembly=System" 
         mc:Ignorable="d"
-        Title="IIP_176x.x_win" Height="414" Width="800" MinWidth="770" MinHeight="300" Closing="fMain_Closing" FontSize="13" WindowStartupLocation="CenterScreen">
+        Title="IIP_176x.x_win" Height="414" Width="700" MinWidth="670" MinHeight="300" Closing="fMain_Closing" FontSize="13" WindowStartupLocation="CenterScreen">
     <Window.Resources>
         <ObjectDataProvider MethodName="GetValues" ObjectType="{x:Type sys:Enum}" x:Key="ParityValues">
             <ObjectDataProvider.MethodParameters>
@@ -25,7 +25,7 @@
         </Grid.ColumnDefinitions>
         
         <StackPanel Background="#FFE5E5E5" Grid.Row="0" Orientation="Vertical">
-            <GroupBox Header="Подключение COM-порт" Width="680" HorizontalAlignment="Left">
+            <GroupBox Header="Подключение COM-порт" Width="auto" HorizontalAlignment="Left">
                 <StackPanel Orientation="Horizontal">
                     <ComboBox x:Name="cbSerialPort"  Margin="3" Width="84" VerticalAlignment="Center"/>
                     <Button x:Name="btnSerialRefresh" Content="↻" Margin="3" Click="btnSerialRefresh_Click" VerticalAlignment="Center"  Width="25" ToolTip="Обновить список портов" RenderTransformOrigin="0.5,0.508"/>
@@ -43,7 +43,7 @@
             </GroupBox>
 
             <GroupBox Header="Установки" Width="auto">
-                <Grid>
+                <Grid Width="auto">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="auto"/>
                         <ColumnDefinition Width="auto"/>
