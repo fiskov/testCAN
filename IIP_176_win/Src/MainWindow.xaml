@@ -58,17 +58,17 @@
                         <RowDefinition/>
                     </Grid.RowDefinitions>
                     <Label Content="Значение (-999...9999)" Grid.Row="0" Grid.Column="0" VerticalContentAlignment="Center"/>
-                    <TextBox x:Name="txtValue" Grid.Row="0" Grid.Column="1" Width="40" VerticalContentAlignment="Center" HorizontalContentAlignment="Center">0</TextBox>
-                    <Label Content="Шкала (0...100%)" Grid.Row="1" Grid.Column="0" VerticalContentAlignment="Center"/>
-                    <TextBox x:Name="txtValue2" Grid.Row="1" Grid.Column="1" Width="40" VerticalContentAlignment="Center" HorizontalContentAlignment="Center">0</TextBox>
+                    <TextBox x:Name="txtValue" Grid.Row="0" Grid.Column="1" Width="60" VerticalContentAlignment="Center" HorizontalContentAlignment="Center">0</TextBox>
+                    <Label Content="Шкала (0...127)" Grid.Row="1" Grid.Column="0" VerticalContentAlignment="Center"/>
+                    <TextBox x:Name="txtValue2" Grid.Row="1" Grid.Column="1" Width="60" VerticalContentAlignment="Center" HorizontalContentAlignment="Center">0</TextBox>
                     <CheckBox x:Name="chkAutoInc" Content="Автоинкремент" Grid.Column="0" Grid.Row="2" VerticalAlignment="Center"/>
 
                     <Label Content="Яркость" Grid.Row="0" Grid.Column="3" VerticalContentAlignment="Center"/>
                     <ComboBox x:Name="cbBright" IsReadOnly="True" SelectedIndex="0" Grid.Row="0" Grid.Column="4">
-                        <ComboBoxItem Content="Максимум"/>
-                        <ComboBoxItem Content="Высокая"/>
-                        <ComboBoxItem Content="Низкая"/>
                         <ComboBoxItem Content="Минимум"/>
+                        <ComboBoxItem Content="Низкая"/>
+                        <ComboBoxItem Content="Высокая"/>
+                        <ComboBoxItem Content="Максимум"/>
                     </ComboBox>
 
                     <Label Content="Положение точки" Grid.Row="1" Grid.Column="3" VerticalContentAlignment="Center"/>
