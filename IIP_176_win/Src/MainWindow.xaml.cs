@@ -31,6 +31,8 @@ namespace testWin
 
         string logFileName;
 
+        const int timerPeriod_ms = 300; //
+
 
         public MainWindow()
         {
@@ -46,7 +48,7 @@ namespace testWin
 
             timerSend = new System.Windows.Threading.DispatcherTimer();
             timerSend.Tick += DispatcherTimerSend_Tick;
-            timerSend.Interval = TimeSpan.FromMilliseconds(333);
+            timerSend.Interval = TimeSpan.FromMilliseconds(timerPeriod_ms);
             timerSend.Start();
 
             LogAdd("Start");
@@ -176,6 +178,16 @@ namespace testWin
             cbSerialPort.ItemsSource = ports;
         }
 
+        private void ResetValue_Click(object sender, RoutedEventArgs e)
+        {
+            txtValue.Text = "0";
+        }
+
+        private void ResetValue2_Click(object sender, RoutedEventArgs e)
+        {
+            txtValue2.Text = "0";
+        }
+
         private void SendDataUART(byte addr, int size, byte[] bfr)
         {            
             var bfrOut = new byte[size + 3];
@@ -242,7 +254,23 @@ namespace testWin
             if (chkAutoInc.IsChecked == true)
             {
                 value128 += dir128;
-                if (value128 == 127 || value128 == 0) dir128 = -dir128;
+                if (value128 >= 127) dir128 = -1;
+                if (value128 <= 0) dir128 = 1;
+
+                if (chkSendShort.IsChecked == true)
+                {
+                    if (value128 < 125)
+                    {
+                        value128 = 125;
+                        dir128 = 1;
+                    }
+                    if (value128 > 126)
+                    {
+                        value128 = 126;
+                        dir128 = -1;
+                    }
+                }
+                
                 txtValue.Text = value128.ToString();
                 txtValue2.Text = value128.ToString();
             }

@@ -64,8 +64,6 @@ namespace testICAM
 
             string msg = "Управление работает только при отключенных установках команды 4хх";
             chkFlasher1.ToolTip = msg;
-            chkFlasher2.ToolTip = msg;
-            chkFlasher3.ToolTip = msg;
             cbBuzzer.ToolTip = msg;
 
             LogAdd("Start");
@@ -288,8 +286,8 @@ namespace testICAM
             bfr.SetBit(1, 2, chkLED11.IsChecked == true);
 
             bfr.SetBit(2, 0, chkFlasher1.IsChecked == true);
-            bfr.SetBit(2, 1, chkFlasher2.IsChecked == true);
-            bfr.SetBit(2, 2, chkFlasher3.IsChecked == true);
+            //bfr.SetBit(2, 1, chkFlasher2.IsChecked == true);
+            //bfr.SetBit(2, 2, chkFlasher3.IsChecked == true);
 
             bfr.SetBit(3, 0, (cbBuzzer.SelectedIndex & 1) > 0);
             bfr.SetBit(3, 1, (cbBuzzer.SelectedIndex & 2) > 0);
@@ -300,7 +298,7 @@ namespace testICAM
             bfr.SetBit(4, 2, (cbBtnLed2.SelectedIndex & 1) > 0);
             bfr.SetBit(4, 3, (cbBtnLed2.SelectedIndex & 2) > 0);
 
-            byte fg = byte.Parse(txtFGroup.Text, System.Globalization.NumberStyles.HexNumber);
+            byte fg = GetAddrDevice(2);
 
             SendDataUART((short)(0x200 + fg) , 5, bfr);
         }
@@ -313,7 +311,7 @@ namespace testICAM
             bfr.PutUInt16(4, UInt16.Parse(TxtBtnLedOff_Quick.Text));
             bfr.PutUInt16(6, UInt16.Parse(TxtBtnLedOn_Quick.Text));
 
-            byte fg = byte.Parse(txtFGroup.Text, System.Globalization.NumberStyles.HexNumber);
+            byte fg = GetAddrDevice(5);
 
             SendDataUART((short)(0x500 + fg), 8, bfr);
         }
@@ -326,7 +324,7 @@ namespace testICAM
             bfr.PutByte(4, byte.Parse(TxtPressTime_Fixed.Text));
             bfr.PutByte(5, byte.Parse(TxtPressTime_Save.Text));
 
-            byte fg = byte.Parse(txtFGroup.Text, System.Globalization.NumberStyles.HexNumber);
+            byte fg = GetAddrDevice(6);
 
             SendDataUART((short)(0x600 + fg), 6, bfr);
         }
@@ -339,7 +337,7 @@ namespace testICAM
             bfr.PutUInt16(4, UInt16.Parse(TxtBtnFilter.Text));
             bfr.PutUInt16(6, UInt16.Parse(TxtBtnDILong.Text));
 
-            byte fg = byte.Parse(txtFGroup.Text, System.Globalization.NumberStyles.HexNumber);
+            byte fg = GetAddrDevice(7);
 
             SendDataUART((short)(0x700 + fg), 8, bfr);
         }
@@ -372,13 +370,39 @@ namespace testICAM
             bfr.SetBit2(4, 6, cbLEDAlarm10.SelectedIndex);
             bfr.SetBit2(5, 2, cbLEDAlarm11.SelectedIndex);
 
-            byte addr = byte.Parse(txtAddr.Text, System.Globalization.NumberStyles.HexNumber);
-            SendDataUART((short)(0x480 + addr), 6, bfr);
+            byte addr = GetAddrDevice(4);
+            SendDataUART((short)(0x400 + addr), 6, bfr);
         }
 
         private void DispatcherTimerSend_Tick(object sender, EventArgs e)
         {
             //if (isSending) btnSend_Click(null, null);
-        }        
+        }
+
+        private byte GetAddrDevice(byte cmd)
+        {
+            byte grp = 0;
+            if (chkFG1.IsChecked == true) grp |= 0x01;
+            if (chkFG2.IsChecked == true) grp |= 0x02;
+            if (chkFG3.IsChecked == true) grp |= 0x04;
+            if (chkFG4.IsChecked == true) grp |= 0x08;
+            if (chkFG5.IsChecked == true) grp |= 0x10;
+            if (chkFG6.IsChecked == true) grp |= 0x20;
+            if (chkFG7.IsChecked == true) grp |= 0x40;
+
+            byte addr = (byte)( 0x80 | byte.Parse(txtAddr.Text, System.Globalization.NumberStyles.HexNumber) );
+
+            //адресация по группе
+            if (rbAddrGroup.IsChecked == true) return grp;
+
+            //адресация по адресу
+            if (rbAddr.IsChecked == true) return addr;
+
+            //адресация как в ТЗ - на команду 4 по адресу, остальные по группе
+            if (cmd == 4)
+                return addr;
+            else
+                return grp;
+        }
     }
 }

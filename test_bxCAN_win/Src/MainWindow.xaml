@@ -6,7 +6,7 @@
         xmlns:sys="clr-namespace:System;assembly=mscorlib"
         xmlns:io="clr-namespace:System.IO.Ports;assembly=System" 
         mc:Ignorable="d"
-        Title="Test CAN win" Height="800" Width="1080" MinWidth="770" MinHeight="500" Closing="fMain_Closing" FontSize="13" WindowStartupLocation="CenterScreen">
+        Title="Test CAN win" Height="800" Width="976" MinWidth="770" MinHeight="500" Closing="fMain_Closing" FontSize="13" WindowStartupLocation="CenterScreen">
     <Window.Resources>
         <ObjectDataProvider MethodName="GetValues" ObjectType="{x:Type sys:Enum}" x:Key="ParityValues">
             <ObjectDataProvider.MethodParameters>
@@ -53,98 +53,92 @@
             </StackPanel>
 
             <GroupBox Header="Команда 2хх">
-                    <Grid>
-                        <Grid.RowDefinitions>
-                            <RowDefinition/>
-                            <RowDefinition Height="25"/>
-                        </Grid.RowDefinitions>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="auto"/>
-                            <ColumnDefinition MinWidth="25"/>
-                            <ColumnDefinition MinWidth="25"/>
-                            <ColumnDefinition MinWidth="25"/>
-                            <ColumnDefinition MinWidth="25"/>
-                            <ColumnDefinition MinWidth="25"/>
-                            <ColumnDefinition MinWidth="25"/>
-                            <ColumnDefinition MinWidth="25"/>
-                            <ColumnDefinition MinWidth="25"/>
-                            <ColumnDefinition MinWidth="25"/>
-                            <ColumnDefinition MinWidth="25"/>
-                            <ColumnDefinition Width="auto"/>
-                            <ColumnDefinition Width="auto"/>
-                            <ColumnDefinition Width="auto"/>
-                            <ColumnDefinition Width="auto"/>
-                            <ColumnDefinition Width="auto"/>
-                            <ColumnDefinition Width="auto"/>
-                            <ColumnDefinition Width="100"/>
-                            <ColumnDefinition Width="auto"/>
-                            <ColumnDefinition Width="auto"/>
-                            <ColumnDefinition Width="auto"/>
-                            <ColumnDefinition/>
-                            <ColumnDefinition Width="120"/>
-                        </Grid.ColumnDefinitions>
-                        <Label  Grid.Row="0"  Grid.Column="0" Content="LED : "/>
-                        <Label  Grid.Row="0"  Grid.Column="1" Content="1" HorizontalAlignment="Center"/>
-                        <Label  Grid.Row="0"  Grid.Column="2" Content="2" HorizontalAlignment="Center"/>
-                        <Label  Grid.Row="0"  Grid.Column="3" Content="3" HorizontalAlignment="Center"/>
-                        <Label  Grid.Row="0"  Grid.Column="4" Content="4" HorizontalAlignment="Center"/>
-                        <Label  Grid.Row="0"  Grid.Column="5" Content="5" HorizontalAlignment="Center"/>
-                        <Label  Grid.Row="0"  Grid.Column="6" Content="6" HorizontalAlignment="Center"/>
-                        <Label  Grid.Row="0"  Grid.Column="7" Content="7" HorizontalAlignment="Center"/>
-                        <Label  Grid.Row="0"  Grid.Column="8" Content="8" HorizontalAlignment="Center"/>
-                        <Label  Grid.Row="0"  Grid.Column="9" Content="9" HorizontalAlignment="Center"/>
-                        <Label  Grid.Row="0"  Grid.Column="10" Content="10" HorizontalAlignment="Center"/>
-                        <Label  Grid.Row="0"  Grid.Column="11" Content="11" HorizontalAlignment="Center"/>
-                        <Label  Grid.Row="0"  Grid.Column="12" Content=" "/>
-                        <Label  Grid.Row="0"  Grid.Column="13" Content="Мигалка"/>
-                        <Label  Grid.Row="0"  Grid.Column="14" Content="М2"/>
-                        <Label  Grid.Row="0"  Grid.Column="15" Content="М3"/>
-                        <Label  Grid.Row="0"  Grid.Column="16" Content=" "/>
-                        <Label  Grid.Row="0"  Grid.Column="17" Content="Сирена"/>
-                        <Label  Grid.Row="0"  Grid.Column="18" Content=" "/>
-                        <Label  Grid.Row="0"  Grid.Column="19" Content="Подсветка1"/>
-                        <Label  Grid.Row="0"  Grid.Column="20" Content="Подсветка2"/>
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="40"/>
+                        <ColumnDefinition Width="30"/>
+                        <ColumnDefinition Width="30"/>
+                        <ColumnDefinition Width="30"/>
+                        <ColumnDefinition Width="30"/>
+                        <ColumnDefinition Width="30"/>
+                        <ColumnDefinition Width="30"/>
+                        <ColumnDefinition Width="30"/>
+                        <ColumnDefinition Width="30"/>
+                        <ColumnDefinition Width="30"/>
+                        <ColumnDefinition Width="30"/>
+                        <ColumnDefinition Width="30"/>
+                        <ColumnDefinition Width="20"/>
+                        <ColumnDefinition Width="auto"/>
+                        <ColumnDefinition Width="20"/>
+                        <ColumnDefinition Width="auto"/>
+                        <ColumnDefinition Width="20"/>
+                        <ColumnDefinition Width="80"/>
+                        <ColumnDefinition Width="80"/>
+                        <ColumnDefinition MinWidth="25"/>
+                        <ColumnDefinition Width="120"/>
+                    </Grid.ColumnDefinitions>
+                    <Label  Grid.Row="0"  Grid.Column="0" Content="LED" Padding="0" Grid.RowSpan="2" HorizontalAlignment="Center"/>
+                    <Label  Grid.Row="0"  Grid.Column="1" Content="1" HorizontalAlignment="Center" Padding="0"/>
+                    <Label  Grid.Row="0"  Grid.Column="2" Content="2" HorizontalAlignment="Center" Padding="0"/>
+                    <Label  Grid.Row="0"  Grid.Column="3" Content="3" HorizontalAlignment="Center" Padding="0"/>
+                    <Label  Grid.Row="0"  Grid.Column="4" Content="4" HorizontalAlignment="Center" Padding="0"/>
+                    <Label  Grid.Row="0"  Grid.Column="5" Content="5" HorizontalAlignment="Center" Padding="0"/>
+                    <Label  Grid.Row="0"  Grid.Column="6" Content="6" HorizontalAlignment="Center" Padding="0"/>
+                    <Label  Grid.Row="0"  Grid.Column="7" Content="7" HorizontalAlignment="Center" Padding="0"/>
+                    <Label  Grid.Row="0"  Grid.Column="8" Content="8" HorizontalAlignment="Center" Padding="0"/>
+                    <Label  Grid.Row="0"  Grid.Column="9" Content="9" HorizontalAlignment="Center" Padding="0"/>
+                    <Label  Grid.Row="0"  Grid.Column="10" Content="10" HorizontalAlignment="Center" Padding="0"/>
+                    <Label  Grid.Row="0"  Grid.Column="11" Content="11" HorizontalAlignment="Center" Padding="0"/>
+                    <Label  Grid.Row="0"  Grid.Column="12" Content=" " Padding="0"/>
+                    <Label  Grid.Row="0"  Grid.Column="13" Content="Мигалка" HorizontalAlignment="Center" Padding="0"/>
 
-                        <CheckBox IsChecked="False" HorizontalAlignment="Center" Name="chkLED1" Grid.Row="1"  Grid.Column="1"/>
-                        <CheckBox IsChecked="False" HorizontalAlignment="Center" Name="chkLED2" Grid.Row="1"  Grid.Column="2"/>
-                        <CheckBox IsChecked="False" HorizontalAlignment="Center" Name="chkLED3" Grid.Row="1"  Grid.Column="3"/>
-                        <CheckBox IsChecked="False" HorizontalAlignment="Center" Name="chkLED4" Grid.Row="1"  Grid.Column="4"/>
-                        <CheckBox IsChecked="False" HorizontalAlignment="Center" Name="chkLED5" Grid.Row="1"  Grid.Column="5"/>
-                        <CheckBox IsChecked="False" HorizontalAlignment="Center" Name="chkLED6" Grid.Row="1"  Grid.Column="6"/>
-                        <CheckBox IsChecked="False" HorizontalAlignment="Center" Name="chkLED7" Grid.Row="1"  Grid.Column="7"/>
-                        <CheckBox IsChecked="False" HorizontalAlignment="Center" Name="chkLED8" Grid.Row="1"  Grid.Column="8"/>
-                        <CheckBox IsChecked="False" HorizontalAlignment="Center" Name="chkLED9" Grid.Row="1"  Grid.Column="9"/>
-                        <CheckBox IsChecked="False" HorizontalAlignment="Center" Name="chkLED10" Grid.Row="1"  Grid.Column="10"/>
-                        <CheckBox IsChecked="False" HorizontalAlignment="Center" Name="chkLED11" Grid.Row="1"  Grid.Column="11"/>
+                    <Label  Grid.Row="0"  Grid.Column="15" Content="Сирена"  HorizontalAlignment="Center" Padding="0"/>
 
-                        <CheckBox IsChecked="False" HorizontalAlignment="Center" Name="chkFlasher1" Grid.Row="1"  Grid.Column="13"/>
-                        <CheckBox IsChecked="False" HorizontalAlignment="Center" Name="chkFlasher2" Grid.Row="1"  Grid.Column="14"/>
-                        <CheckBox IsChecked="False" HorizontalAlignment="Center" Name="chkFlasher3" Grid.Row="1"  Grid.Column="15"/>
+                    <Label  Grid.Row="0"  Grid.Column="17" Content="Подсветка1" HorizontalAlignment="Center" Padding="0"/>
+                    <Label  Grid.Row="0"  Grid.Column="18" Content="Подсветка2" HorizontalAlignment="Center" Padding="0"/>
 
-                        <ComboBox x:Name="cbBuzzer" IsReadOnly="True" SelectedIndex="0" Grid.Row="1"  Grid.Column="17">
-                            <ComboBoxItem Content="Выкл"/>
-                            <ComboBoxItem Content="Пожар"/>
-                            <ComboBoxItem Content="АПС"/>
-                            <ComboBoxItem Content="Аврал"/>
-                        </ComboBox>
+                    <CheckBox IsChecked="False" HorizontalAlignment="Center" Name="chkLED1" Grid.Row="1"  Grid.Column="1" />
+                    <CheckBox IsChecked="False" HorizontalAlignment="Center" Name="chkLED2" Grid.Row="1"  Grid.Column="2"/>
+                    <CheckBox IsChecked="False" HorizontalAlignment="Center" Name="chkLED3" Grid.Row="1"  Grid.Column="3"/>
+                    <CheckBox IsChecked="False" HorizontalAlignment="Center" Name="chkLED4" Grid.Row="1"  Grid.Column="4"/>
+                    <CheckBox IsChecked="False" HorizontalAlignment="Center" Name="chkLED5" Grid.Row="1"  Grid.Column="5"/>
+                    <CheckBox IsChecked="False" HorizontalAlignment="Center" Name="chkLED6" Grid.Row="1"  Grid.Column="6"/>
+                    <CheckBox IsChecked="False" HorizontalAlignment="Center" Name="chkLED7" Grid.Row="1"  Grid.Column="7"/>
+                    <CheckBox IsChecked="False" HorizontalAlignment="Center" Name="chkLED8" Grid.Row="1"  Grid.Column="8"/>
+                    <CheckBox IsChecked="False" HorizontalAlignment="Center" Name="chkLED9" Grid.Row="1"  Grid.Column="9"/>
+                    <CheckBox IsChecked="False" HorizontalAlignment="Center" Name="chkLED10" Grid.Row="1"  Grid.Column="10"/>
+                    <CheckBox IsChecked="False" HorizontalAlignment="Center" Name="chkLED11" Grid.Row="1"  Grid.Column="11"/>
 
-                        <ComboBox x:Name="cbBtnLed1" IsReadOnly="True" SelectedIndex="0" Grid.Row="1"  Grid.Column="19">
-                            <ComboBoxItem Content="Выкл"/>
-                            <ComboBoxItem Content="Вкл"/>
-                            <ComboBoxItem Content="Редко"/>
-                            <ComboBoxItem Content="Часто"/>
-                        </ComboBox>
+                    <CheckBox IsChecked="False" HorizontalAlignment="Center" Name="chkFlasher1" Grid.Row="1"  Grid.Column="13"/>
 
-                        <ComboBox x:Name="cbBtnLed2" IsReadOnly="True" SelectedIndex="0" Grid.Row="1"  Grid.Column="20">
-                            <ComboBoxItem Content="Выкл"/>
-                            <ComboBoxItem Content="Вкл"/>
-                            <ComboBoxItem Content="Редко"/>
-                            <ComboBoxItem Content="Часто"/>
-                        </ComboBox>
+                    <ComboBox x:Name="cbBuzzer" IsReadOnly="True" SelectedIndex="0" Grid.Row="1"  Grid.Column="15">
+                        <ComboBoxItem Content="Выкл"/>
+                        <ComboBoxItem Content="Пожар"/>
+                        <ComboBoxItem Content="АПС"/>
+                        <ComboBoxItem Content="Аврал"/>
+                    </ComboBox>
 
-                        <Button Content="Отправить 2xx" Name="send2xx" Grid.Column="22" Grid.Row="0" Grid.RowSpan="2" Click="Send2xx_Click"/>
+                    <ComboBox x:Name="cbBtnLed1" IsReadOnly="True" SelectedIndex="0" Grid.Row="1"  Grid.Column="17">
+                        <ComboBoxItem Content="Выкл"/>
+                        <ComboBoxItem Content="Вкл"/>
+                        <ComboBoxItem Content="Редко"/>
+                        <ComboBoxItem Content="Часто"/>
+                    </ComboBox>
 
-                    </Grid>
+                    <ComboBox x:Name="cbBtnLed2" IsReadOnly="True" SelectedIndex="0" Grid.Row="1"  Grid.Column="18">
+                        <ComboBoxItem Content="Выкл"/>
+                        <ComboBoxItem Content="Вкл"/>
+                        <ComboBoxItem Content="Редко"/>
+                        <ComboBoxItem Content="Часто"/>
+                    </ComboBox>
+
+                    <Button Content="Отправить 2xx" Name="send2xx" Grid.Column="20" Grid.Row="0" Grid.RowSpan="2" Click="Send2xx_Click"/>
+
+                </Grid>
             </GroupBox>
             <GroupBox Header="Команда 4xx">
                 <Grid x:Name="grid4xx">
@@ -167,22 +161,22 @@
                         <ColumnDefinition Width="auto"/>
                         <ColumnDefinition Width="auto"/>
                         <ColumnDefinition/>
-                        <ColumnDefinition Width="150"/>
+                        <ColumnDefinition Width="120"/>
                     </Grid.ColumnDefinitions>
-                    <Label Content="LED" Grid.Row="0" Grid.Column="0"/>
-                    <Label Content="Мигалка" Grid.Row="1" Grid.Column="0"/>
-                    <Label Content="Сирена" Grid.Row="2" Grid.Column="0"/>
-                    <Label Content="1" Grid.Row="0" Grid.Column="1" HorizontalAlignment="Center"/>
-                    <Label Content="2" Grid.Row="0" Grid.Column="2" HorizontalAlignment="Center"/>
-                    <Label Content="3" Grid.Row="0" Grid.Column="3" HorizontalAlignment="Center"/>
-                    <Label Content="4" Grid.Row="0" Grid.Column="4" HorizontalAlignment="Center"/>
-                    <Label Content="5" Grid.Row="0" Grid.Column="5" HorizontalAlignment="Center"/>
-                    <Label Content="6" Grid.Row="0" Grid.Column="6" HorizontalAlignment="Center"/>
-                    <Label Content="7" Grid.Row="0" Grid.Column="7" HorizontalAlignment="Center"/>
-                    <Label Content="8" Grid.Row="0" Grid.Column="8" HorizontalAlignment="Center"/>
-                    <Label Content="9" Grid.Row="0" Grid.Column="9" HorizontalAlignment="Center"/>
-                    <Label Content="10" Grid.Row="0" Grid.Column="10" HorizontalAlignment="Center"/>
-                    <Label Content="11" Grid.Row="0" Grid.Column="11" HorizontalAlignment="Center"/>
+                    <Label Content="LED" Grid.Row="0" Grid.Column="0" HorizontalAlignment="Center" Padding="0"/>
+                    <Label Content="Мигалка" Grid.Row="1" Grid.Column="0" HorizontalAlignment="Center" Padding="0"/>
+                    <Label Content="Сирена" Grid.Row="2" Grid.Column="0" HorizontalAlignment="Center" VerticalAlignment="Center" Padding="0"/>
+                    <Label Content="1" Grid.Row="0" Grid.Column="1" HorizontalAlignment="Center" Padding="0"/>
+                    <Label Content="2" Grid.Row="0" Grid.Column="2" HorizontalAlignment="Center" Padding="0"/>
+                    <Label Content="3" Grid.Row="0" Grid.Column="3" HorizontalAlignment="Center" Padding="0"/>
+                    <Label Content="4" Grid.Row="0" Grid.Column="4" HorizontalAlignment="Center" Padding="0"/>
+                    <Label Content="5" Grid.Row="0" Grid.Column="5" HorizontalAlignment="Center" Padding="0"/>
+                    <Label Content="6" Grid.Row="0" Grid.Column="6" HorizontalAlignment="Center" Padding="0"/>
+                    <Label Content="7" Grid.Row="0" Grid.Column="7" HorizontalAlignment="Center" Padding="0"/>
+                    <Label Content="8" Grid.Row="0" Grid.Column="8" HorizontalAlignment="Center" Padding="0"/>
+                    <Label Content="9" Grid.Row="0" Grid.Column="9" HorizontalAlignment="Center" Padding="0"/>
+                    <Label Content="10" Grid.Row="0" Grid.Column="10" HorizontalAlignment="Center" Padding="0"/>
+                    <Label Content="11" Grid.Row="0" Grid.Column="11" HorizontalAlignment="Center" Padding="0"/>
 
                     <CheckBox IsChecked="False" Name="chkLEDFlasher1" Grid.Column="1" Grid.Row="1"  HorizontalAlignment="Center" VerticalAlignment="Center"/>
                     <CheckBox IsChecked="False" Name="chkLEDFlasher2" Grid.Column="2" Grid.Row="1"  HorizontalAlignment="Center" VerticalAlignment="Center"/>
@@ -196,17 +190,17 @@
                     <CheckBox IsChecked="False" Name="chkLEDFlasher10" Grid.Column="10" Grid.Row="1"  HorizontalAlignment="Center" VerticalAlignment="Center"/>
                     <CheckBox IsChecked="False" Name="chkLEDFlasher11" Grid.Column="11" Grid.Row="1"  HorizontalAlignment="Center" VerticalAlignment="Center"/>
 
-                    <ComboBox Name="cbLEDAlarm1" Grid.Column="1" Grid.Row="2"  HorizontalAlignment="Center" VerticalAlignment="Center" Width="65"/>
-                    <ComboBox Name="cbLEDAlarm2" Grid.Column="2" Grid.Row="2"  HorizontalAlignment="Center" VerticalAlignment="Center" Width="65" />
-                    <ComboBox Name="cbLEDAlarm3" Grid.Column="3" Grid.Row="2"  HorizontalAlignment="Center" VerticalAlignment="Center" Width="65" />
-                    <ComboBox Name="cbLEDAlarm4" Grid.Column="4" Grid.Row="2"  HorizontalAlignment="Center" VerticalAlignment="Center" Width="65" />
-                    <ComboBox Name="cbLEDAlarm5" Grid.Column="5" Grid.Row="2"  HorizontalAlignment="Center" VerticalAlignment="Center" Width="65" />
-                    <ComboBox Name="cbLEDAlarm6" Grid.Column="6" Grid.Row="2"  HorizontalAlignment="Center" VerticalAlignment="Center" Width="65" />
-                    <ComboBox Name="cbLEDAlarm7" Grid.Column="7" Grid.Row="2"  HorizontalAlignment="Center" VerticalAlignment="Center" Width="65" />
-                    <ComboBox Name="cbLEDAlarm8" Grid.Column="8" Grid.Row="2"  HorizontalAlignment="Center" VerticalAlignment="Center" Width="65" />
-                    <ComboBox Name="cbLEDAlarm9" Grid.Column="9" Grid.Row="2"  HorizontalAlignment="Center" VerticalAlignment="Center" Width="65" />
-                    <ComboBox Name="cbLEDAlarm10" Grid.Column="10" Grid.Row="2"  HorizontalAlignment="Center" VerticalAlignment="Center" Width="65" />
-                    <ComboBox Name="cbLEDAlarm11" Grid.Column="11" Grid.Row="2"  HorizontalAlignment="Center" VerticalAlignment="Center" Width="65" />
+                    <ComboBox Name="cbLEDAlarm1" Grid.Column="1" Grid.Row="2"  HorizontalAlignment="Center" VerticalAlignment="Center" Width="70"/>
+                    <ComboBox Name="cbLEDAlarm2" Grid.Column="2" Grid.Row="2"  HorizontalAlignment="Center" VerticalAlignment="Center" Width="70" />
+                    <ComboBox Name="cbLEDAlarm3" Grid.Column="3" Grid.Row="2"  HorizontalAlignment="Center" VerticalAlignment="Center" Width="70" />
+                    <ComboBox Name="cbLEDAlarm4" Grid.Column="4" Grid.Row="2"  HorizontalAlignment="Center" VerticalAlignment="Center" Width="70" />
+                    <ComboBox Name="cbLEDAlarm5" Grid.Column="5" Grid.Row="2"  HorizontalAlignment="Center" VerticalAlignment="Center" Width="70" />
+                    <ComboBox Name="cbLEDAlarm6" Grid.Column="6" Grid.Row="2"  HorizontalAlignment="Center" VerticalAlignment="Center" Width="70" />
+                    <ComboBox Name="cbLEDAlarm7" Grid.Column="7" Grid.Row="2"  HorizontalAlignment="Center" VerticalAlignment="Center" Width="70" />
+                    <ComboBox Name="cbLEDAlarm8" Grid.Column="8" Grid.Row="2"  HorizontalAlignment="Center" VerticalAlignment="Center" Width="70" />
+                    <ComboBox Name="cbLEDAlarm9" Grid.Column="9" Grid.Row="2"  HorizontalAlignment="Center" VerticalAlignment="Center" Width="70" />
+                    <ComboBox Name="cbLEDAlarm10" Grid.Column="10" Grid.Row="2"  HorizontalAlignment="Center" VerticalAlignment="Center" Width="70" />
+                    <ComboBox Name="cbLEDAlarm11" Grid.Column="11" Grid.Row="2"  HorizontalAlignment="Center" VerticalAlignment="Center" Width="70" />
                     <Button Content="Отправить 4xx" Name="Send4xx" Grid.Column="13" Grid.RowSpan="3" Padding="10" VerticalAlignment="Bottom" Click="Send4xx_Click"/>
 
                 </Grid>
@@ -247,28 +241,43 @@
                     <TextBox x:Name="TxtBuzzerSilentTime" Margin="3 0 3 0" Width="40" VerticalContentAlignment="Center" HorizontalContentAlignment="Center">30</TextBox>
                     <Label Content="Антидребезг, мс" Padding="8 0 8 0" VerticalContentAlignment="Center"/>
                     <TextBox x:Name="TxtBtnFilter" Margin="3 0 3 0" Width="40" VerticalContentAlignment="Center" HorizontalContentAlignment="Center">50</TextBox>
-                    <Label Content="Длительность длительного замыкания DI, мс" Padding="8 0 8 0" VerticalContentAlignment="Center"/>
+                    <Label Content="Длительное замыкание DI, мс" Padding="8 0 8 0" VerticalContentAlignment="Center"/>
                     <TextBox x:Name="TxtBtnDILong" Margin="3 0 3 0" Width="40" VerticalContentAlignment="Center" HorizontalContentAlignment="Center">500</TextBox>
                     <Button Content="Отправить 7xx" Name="Send7xx" Margin="30 0 3 0" Padding="5" VerticalAlignment="Bottom" Click="Send7xx_Click"/>
                 </StackPanel>
             </GroupBox>
-            <GroupBox Header="Пакет отправки">
-                <StackPanel Orientation="Horizontal">
-                    <Label Content="Адрес, hex" Padding="8 0 8 0" VerticalContentAlignment="Center"/>
-                    <TextBox x:Name="txtAddr" Margin="3" MaxLength="2" Width="40" VerticalContentAlignment="Center" HorizontalContentAlignment="Center">1</TextBox>
-                    <Label Content="Группа" Margin="8 0 8 0" Padding="8 0 8 0" VerticalContentAlignment="Center"/>
-                    <TextBox x:Name="txtFGroup" Margin="3" MaxLength="2" Width="40" VerticalContentAlignment="Center" HorizontalContentAlignment="Center">4</TextBox>
-                    <Label Content="Команда" Margin="8 0 8 0" Padding="8 0 8 0" VerticalContentAlignment="Center"/>
+            <StackPanel Orientation="Horizontal">
+                <GroupBox Header="Адресация">
+                    <StackPanel Orientation="Horizontal">
+                        <StackPanel Orientation="Vertical">
+                            <RadioButton Content="По умолчанию" IsChecked="True" GroupName="RadioAddr" x:Name="rbAddrDefault"/>
+                            <RadioButton Content="По адресу" IsChecked="False" GroupName="RadioAddr" x:Name="rbAddr"/>
+                            <RadioButton Content="По группе" IsChecked="False" GroupName="RadioAddr" x:Name="rbAddrGroup"/>
+                        </StackPanel>
+                        <Label Content="Адрес, hex" Padding="8 0 0 0" VerticalContentAlignment="Center"/>
+                        <TextBox x:Name="txtAddr" Margin="3" MaxLength="2" Width="40" Height="25" VerticalContentAlignment="Center" HorizontalContentAlignment="Center">1</TextBox>
+                        <Label Content="Группа (биты 1..7)" Margin="8 0 0 0" Padding="8 0 4 0" VerticalContentAlignment="Center"/>
+                        <CheckBox x:Name="chkFG1" VerticalAlignment="Center" Margin="2 0 2 0" IsChecked="False" />
+                        <CheckBox x:Name="chkFG2" VerticalAlignment="Center" Margin="2 0 2 0" IsChecked="False" />
+                        <CheckBox x:Name="chkFG3" VerticalAlignment="Center" Margin="2 0 2 0" IsChecked="False" />
+                        <CheckBox x:Name="chkFG4" VerticalAlignment="Center" Margin="2 0 2 0" IsChecked="False" />
+                        <CheckBox x:Name="chkFG5" VerticalAlignment="Center" Margin="2 0 2 0" IsChecked="False" />
+                        <CheckBox x:Name="chkFG6" VerticalAlignment="Center" Margin="2 0 2 0" IsChecked="False" />
+                        <CheckBox x:Name="chkFG7" VerticalAlignment="Center" Margin="2 0 2 0" IsChecked="False" />
+                    </StackPanel>
+                </GroupBox>
+                <GroupBox Header="Команда">
+                    <TextBox x:Name="txtSendBfr" Margin="8 0 8 0" Width="400" Height="35" IsReadOnly="False" FontWeight="Bold" VerticalContentAlignment="Center" FontFamily="Lucida Console" FontSize="14" />
 
-                    <TextBox x:Name="txtSendBfr" Margin="8 0 8 0" Width="520" IsReadOnly="False" FontWeight="Bold" VerticalContentAlignment="Center" FontFamily="Lucida Console" FontSize="14" />
+                </GroupBox>
+            </StackPanel>
+            
 
-                </StackPanel>
-            </GroupBox>
         </StackPanel>
         <Grid Grid.Row="1" Grid.Column="0">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition/>
-                <ColumnDefinition/>
+                <ColumnDefinition Width="350"/>
             </Grid.ColumnDefinitions>
             <Grid.RowDefinitions>
                 <RowDefinition/>

@@ -59,9 +59,13 @@
                     </Grid.RowDefinitions>
                     <Label Content="Значение (-999...9999)" Grid.Row="0" Grid.Column="0" VerticalContentAlignment="Center"/>
                     <TextBox x:Name="txtValue" Grid.Row="0" Grid.Column="1" Width="60" VerticalContentAlignment="Center" HorizontalContentAlignment="Center">0</TextBox>
+                    <Button x:Name="btnResetValue" Grid.Row="0" Grid.Column="2" Content="X" Click="ResetValue_Click"/>
                     <Label Content="Шкала (0...127)" Grid.Row="1" Grid.Column="0" VerticalContentAlignment="Center"/>
                     <TextBox x:Name="txtValue2" Grid.Row="1" Grid.Column="1" Width="60" VerticalContentAlignment="Center" HorizontalContentAlignment="Center">0</TextBox>
+                    <Button x:Name="btnResetValue2" Grid.Row="1" Grid.Column="2" Content="X" Click="ResetValue2_Click"/>
+
                     <CheckBox x:Name="chkAutoInc" Content="Автоинкремент" Grid.Column="0" Grid.Row="2" VerticalAlignment="Center"/>
+                    <CheckBox x:Name="chkSendShort" Content="125-126" Grid.Column="1" Grid.Row="2" VerticalAlignment="Center"/>
 
                     <Label Content="Яркость" Grid.Row="0" Grid.Column="3" VerticalContentAlignment="Center"/>
                     <ComboBox x:Name="cbBright" IsReadOnly="True" SelectedIndex="0" Grid.Row="0" Grid.Column="4">
@@ -109,7 +113,7 @@
                         <CheckBox x:Name="chkSendAuto" IsChecked="False" Content="Повторять" VerticalAlignment="Center" Margin="10 0 0 0"/>
                 </StackPanel>
             </StackPanel>
-            
+
 
         </StackPanel>
         <TextBox x:Name="txtLog" Grid.Row="1" Grid.Column="0"  IsUndoEnabled="False"  VerticalScrollBarVisibility="Visible" FontFamily="Lucida Console" IsReadOnly="True" AcceptsReturn="True" TextWrapping="Wrap"/>
